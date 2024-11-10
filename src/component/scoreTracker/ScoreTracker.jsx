@@ -48,6 +48,7 @@ const ScoreTracker = () => {
         <button onClick={() => SpeechRecognition.stopListening()}>
           Stop Listening
         </button>
+        <br />
         {transcript}
       </div>
       <p>Say "team A score" or "team B score" to track the points.</p>
