@@ -11,21 +11,26 @@ const ScoreTracker = () => {
 
   const handleVoiceCommand = (command) => {
     if (command.includes('team a')) {
-      // if (command.includes('score') || command.includes('point')) {
+      if (command.includes('score') || command.includes('point')) {
         setTeamA(teamA + 1);
-      // }
+      }
     } else if (command.includes('team b')) {
-      // if (command.includes('score') || command.includes('point')) {
+      if (command.includes('score') || command.includes('point')) {
         setTeamB(teamB + 1);
-      // }
+      }
     }
   };
 
   // This effect listens for the voice command and updates the score
   React.useEffect(() => {
     if (transcript) {
-      handleVoiceCommand(transcript.toLowerCase());
-      resetTranscript();
+      if(transcript.toLowerCase()!="team a" || transcript.toLowerCase()!="team b"){
+        resetTranscript();
+        SpeechRecognition.startListening();
+      }
+      else{
+        handleVoiceCommand(transcript.toLowerCase());
+      }
     }
   }, [transcript, teamA, teamB, resetTranscript]);
 
@@ -43,6 +48,7 @@ const ScoreTracker = () => {
         <button onClick={() => SpeechRecognition.stopListening()}>
           Stop Listening
         </button>
+        {transcript}
       </div>
       <p>Say "team A score" or "team B score" to track the points.</p>
     </div>
